@@ -1,4 +1,4 @@
-import { Icon, disableCache, enableCache } from "@iconify/react"
+import { disableCache, enableCache, Icon } from "@iconify/react"
 import clsx from "clsx"
 import { motion } from "framer-motion"
 import { nanoid } from "nanoid"

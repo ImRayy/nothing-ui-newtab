@@ -59,7 +59,6 @@ export const useImageStore = create<ImageStore>((set, get) => ({
       )
       set({ shouldSave: false })
 
-      // biome-ignore lint/suspicious/noConsoleLog: <explanation>
       console.log("Images saved to IndexedDB successfully")
     } catch (error) {
       console.error("Error saving images to IndexedDB:", error)

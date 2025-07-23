@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { AnimatePresence, motion } from "framer-motion"
-import { Suspense, lazy, useState } from "react"
+import { lazy, Suspense, useState } from "react"
 import Button from "../ui/button"
 
 const SidebarContent = lazy(() => import("./sidebar-content"))

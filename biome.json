@@ -6,8 +6,7 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false,
-    "ignore": []
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,
@@ -15,22 +14,17 @@
     "indentWidth": 2,
     "lineEnding": "lf"
   },
-  "organizeImports": {
-    "enabled": true
-  },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "suspicious": {
         "recommended": true,
-        "noExplicitAny": "warn",
-        "noConsoleLog": "warn"
+        "noExplicitAny": "warn"
       },
       "style": {
         "noNonNullAssertion": "off",
         "noUnusedTemplateLiteral": "warn",
-        "noVar": "error",
         "useConst": "warn",
         "useTemplate": "warn"
       },
@@ -48,6 +42,14 @@
       "attributePosition": "auto",
       "arrowParentheses": "always",
       "bracketSpacing": true
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
     }
   }
 }

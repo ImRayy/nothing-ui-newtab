@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "format": "biome format --write ./src",
+    "lint": "biome check --write ./src",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -30,7 +31,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.1.2",
     "@crxjs/vite-plugin": "^2.0.0-beta.28",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

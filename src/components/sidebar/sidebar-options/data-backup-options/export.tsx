@@ -62,7 +62,7 @@ export default function Export() {
       // To check if backup file valid, btoa not necessary just to make it look
       // like a little professional
       "backup-code": btoa("nothing-ui-newtab"),
-      date: new Date().getTime(),
+      date: Date.now(),
 
       // IndexDB items
       "gallery-images": galleryImages
@@ -98,7 +98,7 @@ export default function Export() {
 
     const link = document.createElement("a")
     link.href = jsonString
-    link.download = `nothing-ui-newtab-${new Date().getTime()}.json`
+    link.download = `nothing-ui-newtab-${Date.now()}.json`
     link.click()
     setOpen(false)
   }

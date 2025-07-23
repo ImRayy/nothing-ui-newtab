@@ -1,4 +1,4 @@
-import { Icon, disableCache, enableCache } from "@iconify/react/dist/iconify.js"
+import { disableCache, enableCache, Icon } from "@iconify/react/dist/iconify.js"
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import Button from "~/components/ui/button"

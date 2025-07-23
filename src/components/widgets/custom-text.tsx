@@ -1,8 +1,7 @@
 import clsx from "clsx"
 import { useEffect, useRef, useState } from "react"
 import { useOptionsStore } from "../../store/options"
-import { getGreetings } from "../../utils/datetime"
-import { parseDate } from "../../utils/datetime"
+import { getGreetings, parseDate } from "../../utils/datetime"
 
 const date = new Date()
 
@@ -24,7 +23,7 @@ export const CustomText = () => {
 
   const { day, month, weekDay } = parseDate(date)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: false
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = "auto"

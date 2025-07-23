@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react"
-import { type FormEvent, Suspense, lazy, useEffect, useState } from "react"
+import { type FormEvent, lazy, Suspense, useEffect, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import Button from "~/components/ui/button"
 import { useOptionsStore } from "~/store/options"
@@ -49,7 +49,7 @@ const SearchInput = () => {
         try {
           const isImgFound = await isImage(domain)
           addQuery({ query, isIcon: isImgFound, id: crypto.randomUUID() })
-        } catch (error) {
+        } catch {
           addQuery({ query, isIcon: false, id: crypto.randomUUID() })
         } finally {
           window.location.href = href

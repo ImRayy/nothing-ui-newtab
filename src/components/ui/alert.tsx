@@ -1,6 +1,6 @@
 import { useState } from "react"
-import Button from "./button"
 import type { ButtonProps } from "./button"
+import Button from "./button"
 import Modal from "./modal"
 
 interface AlertProps {

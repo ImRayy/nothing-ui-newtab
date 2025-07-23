@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { Suspense, lazy, useEffect, useState } from "react"
+import { lazy, Suspense, useEffect, useState } from "react"
 import { useSidebarOptions } from "../sidebar-store"
 import AppOptions from "./app-options"
 import ClockOptions from "./clock-options"

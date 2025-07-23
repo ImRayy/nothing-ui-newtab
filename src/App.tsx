@@ -1,6 +1,6 @@
 import * as idbKeyval from "idb-keyval"
 import { nanoid } from "nanoid"
-import { Suspense, lazy, useEffect } from "react"
+import { lazy, Suspense, useEffect } from "react"
 import { Toaster } from "sonner"
 import BackgroundImage from "./components/background-image"
 import Sidebar from "./components/sidebar"
