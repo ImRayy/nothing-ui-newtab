@@ -74,7 +74,7 @@ const AppForm = ({ isOpen, setIsOpen, app }: AppFormProps) => {
   const [icon, setIcon] = useState(app?.icon ?? "")
   const [isIconInput, setIsIconInput] = useState(false)
   const [formTitle, setFormTitle] = useState("")
-  const timeoutID = useRef<number | null>(null)
+  const timeoutID = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const resetFormValues = useCallback(() => {
     setName("")
