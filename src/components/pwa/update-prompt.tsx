@@ -1,6 +1,15 @@
 import { useRegisterSW } from "virtual:pwa-register/react"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { toast } from "sonner"
+import { create } from "zustand"
+
+export const useSWStore = create<{
+  url: string | null
+  registration: ServiceWorkerRegistration | null
+}>(() => ({
+  url: null,
+  registration: null,
+}))
 
 export default function PWAUpdatePrompt() {
   // Check for update every 30 minutes
@@ -12,6 +21,7 @@ export default function PWAUpdatePrompt() {
     updateServiceWorker,
   } = useRegisterSW({
     onRegisteredSW(swUrl, r) {
+      useSWStore.setState({ url: swUrl, registration: r })
       if (period <= 0) return
       if (r?.active?.state === "activated") {
         registerPeriodicSync(period, swUrl, r)
@@ -55,17 +65,22 @@ function registerPeriodicSync(
 ) {
   if (period <= 0) return
 
-  setInterval(async () => {
-    if ("onLine" in navigator && !navigator.onLine) return
+  setInterval(async () => checkForAppUpdate(swUrl, r), period)
+}
 
-    const resp = await fetch(swUrl, {
+export async function checkForAppUpdate(
+  swUrl: string,
+  r: ServiceWorkerRegistration,
+) {
+  if ("onLine" in navigator && !navigator.onLine) return
+
+  const resp = await fetch(swUrl, {
+    cache: "no-store",
+    headers: {
       cache: "no-store",
-      headers: {
-        cache: "no-store",
-        "cache-control": "no-cache",
-      },
-    })
+      "cache-control": "no-cache",
+    },
+  })
 
-    if (resp?.status === 200) await r.update()
-  }, period)
+  if (resp?.status === 200) await r.update()
 }
