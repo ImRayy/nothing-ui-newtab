@@ -26,8 +26,8 @@ const manifest: ManifestV3Export = {
 }
 
 const pwaOptions: Partial<VitePWAOptions> = {
-  registerType: "autoUpdate",
-  injectRegister: "auto",
+  registerType: "prompt",
+  injectRegister: false,
 
   manifest,
 

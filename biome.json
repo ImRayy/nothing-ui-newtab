@@ -29,7 +29,7 @@
         "useTemplate": "warn"
       },
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": "warn"
       }
     }
   },
