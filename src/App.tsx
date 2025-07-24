@@ -3,6 +3,7 @@ import { nanoid } from "nanoid"
 import { lazy, Suspense, useEffect } from "react"
 import { Toaster } from "sonner"
 import BackgroundImage from "./components/background-image"
+import PWAUpdatePrompt from "./components/pwa/update-prompt"
 import Sidebar from "./components/sidebar"
 import WidgetContainer from "./components/widgets/widget-container"
 import type { App as AppType } from "./lib/variables"
@@ -37,8 +38,22 @@ export default function App() {
 
   return (
     <>
-      <Toaster position="top-left" />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: "hsl(var(--card))",
+            borderColor: "hsl(var(--card-foreground) / 0.1)",
+            color: "hsl(var(--card-foreground))",
+          },
+          actionButtonStyle: {
+            background: "hsl(var(--card-foreground))",
+            color: "hsl(var(--card))",
+          },
+        }}
+      />
       <BackgroundImage />
+      <PWAUpdatePrompt />
       <div className="flex min-h-screen w-full select-none items-center justify-center p-4">
         <WidgetContainer />
         <Sidebar />
