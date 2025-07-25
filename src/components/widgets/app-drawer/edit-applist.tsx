@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
-import clsx from "clsx"
 import { useState } from "react"
 import { useAppStore } from "~/store/app-store"
 import type { Setter } from "../../../types/react"
@@ -31,16 +30,12 @@ const EditAppList = ({ removeMode, setRemoveMode }: EditAppListProps) => {
         <Button
           variant={removeMode ? "destructive" : "primary"}
           size="icon"
-          className={clsx("rounded-xl")}
+          className="rounded-xl"
           onClick={() => setRemoveMode((prev) => !prev)}
         >
           <Icon icon="tabler:trash" fontSize={20} />
         </Button>
-        <Button
-          size="icon"
-          className={clsx("rounded-xl")}
-          onClick={resetDrawerApp}
-        >
+        <Button size="icon" className="rounded-xl" onClick={resetDrawerApp}>
           <Icon icon="material-symbols:device-reset-rounded" fontSize={20} />
         </Button>
       </div>
