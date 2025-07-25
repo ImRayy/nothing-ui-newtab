@@ -1,5 +1,6 @@
 import { useRegisterSW } from "virtual:pwa-register/react"
 import { Icon } from "@iconify/react/dist/iconify.js"
+import { nanoid } from "nanoid"
 import { toast } from "sonner"
 import { create } from "zustand"
 
@@ -68,33 +69,27 @@ function registerPeriodicSync(
   setInterval(async () => checkForAppUpdate(swUrl, r), period)
 }
 
-export function checkForAppUpdate(swUrl: string, r: ServiceWorkerRegistration) {
-  if ("onLine" in navigator && !navigator.onLine) return
+export async function checkForAppUpdate(
+  swUrl: string,
+  r: ServiceWorkerRegistration,
+) {
+  const toastId = nanoid()
+  toast.loading("Checking for updates...", { id: toastId })
 
-  const promise = new Promise((resolve, reject) =>
-    (async () => {
-      const resp = await fetch(swUrl, {
-        cache: "no-store",
-        headers: {
-          cache: "no-store",
-          "cache-control": "no-cache",
-        },
-      })
+  if ("onLine" in navigator && !navigator.onLine) {
+    toast.dismiss(toastId)
+    return
+  }
 
-      if (resp?.status === 200) {
-        resolve({})
-      }
-
-      reject()
-    })(),
-  )
-
-  toast.promise(promise, {
-    loading: "Checking for updates...",
-    success: async () => {
-      await r.update()
-      return "Update successful! Enjoy the latest features"
+  const resp = await fetch(swUrl, {
+    cache: "no-store",
+    headers: {
+      cache: "no-store",
+      "cache-control": "no-cache",
     },
-    error: "You're already on the latest version",
   })
+
+  if (resp?.status === 200) await r.update()
+
+  toast.dismiss(toastId)
 }
