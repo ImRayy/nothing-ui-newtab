@@ -68,19 +68,33 @@ function registerPeriodicSync(
   setInterval(async () => checkForAppUpdate(swUrl, r), period)
 }
 
-export async function checkForAppUpdate(
-  swUrl: string,
-  r: ServiceWorkerRegistration,
-) {
+export function checkForAppUpdate(swUrl: string, r: ServiceWorkerRegistration) {
   if ("onLine" in navigator && !navigator.onLine) return
 
-  const resp = await fetch(swUrl, {
-    cache: "no-store",
-    headers: {
-      cache: "no-store",
-      "cache-control": "no-cache",
-    },
-  })
+  const promise = new Promise((resolve, reject) =>
+    (async () => {
+      const resp = await fetch(swUrl, {
+        cache: "no-store",
+        headers: {
+          cache: "no-store",
+          "cache-control": "no-cache",
+        },
+      })
 
-  if (resp?.status === 200) await r.update()
+      if (resp?.status === 200) {
+        resolve({})
+      }
+
+      reject()
+    })(),
+  )
+
+  toast.promise(promise, {
+    loading: "Checking for updates...",
+    success: async () => {
+      await r.update()
+      return "Update successful! Enjoy the latest features"
+    },
+    error: "You're already on the latest version",
+  })
 }
