@@ -1,3 +1,7 @@
+![repo-size](https://img.shields.io/github/repo-size/ImRayy/nothing-ui-newtab?style=for-the-badge&logo=github&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41)
+![size](https://img.shields.io/github/languages/code-size/ImRayy/nothing-ui-newtab?style=for-the-badge&logo=gnu-bash&color=ee999f&logoColor=D9E0EE&labelColor=302D41)
+![last-commit](https://img.shields.io/github/last-commit/ImRayy/nothing-ui-newtab?style=for-the-badge&logo=git&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41)
+
 <div align="center">
 <img src="https://ik.imagekit.io/rayshold/projects/nothing-ui-new-tab/banner.png?updatedAt=1735063786358" alt="banner"/> 
 <hr/>
@@ -36,6 +40,7 @@
 - Add search engines, set icon
 - Set shortcut for search engine to quick switching
 - Search suggestions
+- Offline support
 
 **Planned Features** 
 - [ ] Random image from unsplash or something
