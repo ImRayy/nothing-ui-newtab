@@ -42,6 +42,7 @@
 - Set shortcut for search engine to quick switching
 - Search suggestions
 - Offline support
+- Show android like splash screen when opening links
 
 **Planned Features** 
 - [ ] Random image from unsplash or something

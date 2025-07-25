@@ -134,3 +134,11 @@ export const trimSpaces = (str: string) => str.replace(/\s+/g, " ").trim()
 
 export const googleFavIcon = (domain: string) =>
   `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+
+export const openUrl = (url: string) => {
+  const newWindow = window.open(url, "_self", "noopener,noreferrer")
+
+  if (newWindow) {
+    newWindow.opener = null
+  }
+}

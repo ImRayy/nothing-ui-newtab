@@ -11,7 +11,7 @@ interface AppIconProps {
 export default function AppIcon({ icon, iconSize, className }: AppIconProps) {
   const isMonochromeEnabled = useOptionsStore((s) => s.isMonochromeIcon)
   return (
-    <div style={{ width: iconSize }} className={className}>
+    <span style={{ width: iconSize }} className={className}>
       {icon && !icon.startsWith("webicon:") ? (
         <Icon icon={icon} className="size-full" />
       ) : (
@@ -22,6 +22,6 @@ export default function AppIcon({ icon, iconSize, className }: AppIconProps) {
           className="size-full"
         />
       )}
-    </div>
+    </span>
   )
 }

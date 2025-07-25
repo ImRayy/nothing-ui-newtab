@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { useAppStore } from "~/store/app-store"
-import AppItem from "./app-item"
+import AppListItem from "./app-list-item"
 
 interface AppListProps {
   isRemoveMode: boolean
@@ -24,7 +24,7 @@ const AppList = ({ isRemoveMode }: AppListProps) => {
         className="grid w-full grid-cols-4 gap-4"
       >
         {drawerApps.map((app) => (
-          <AppItem
+          <AppListItem
             app={app}
             isRemoveMode={isRemoveMode}
             key={`drawer-app-${app.id || app.name}`}
