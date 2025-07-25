@@ -13,10 +13,11 @@ const AiTools = () => {
       <AnimatePresence mode="wait">
         {showTools && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed bottom-0 left-0 h-20 w-full bg-background"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ bounce: false }}
+            className="fixed bottom-0 left-0 h-20 w-full rounded-t-2xl bg-background"
           />
         )}
       </AnimatePresence>
@@ -52,7 +53,7 @@ const AiTools = () => {
                     }}
                     key={`ai-tool-${id || name}`}
                     href={`https://${url}`}
-                    className="relative inline-flex h-11 items-center gap-1 rounded-full bg-card px-5 transition-colors hover:bg-card-foreground/20"
+                    className="-z-10 relative inline-flex h-11 items-center gap-1 rounded-full bg-card px-5 transition-colors hover:bg-card-foreground/20"
                   >
                     <Icon icon={icon} fontSize={20} />
                     {name}
