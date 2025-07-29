@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { Slot } from "@radix-ui/react-slot"
+import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import type React from "react"
 import { useEffect, useState } from "react"
@@ -15,12 +16,29 @@ interface WrapperProps {
   onOpenChange: (state: boolean) => void
 }
 
+const ssKeyExternal = "session:opened:external-link"
+const ssKeyAppId = "session:selected:app-id"
+
 const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
   const MotionWrapper = motion.create(Slot)
   const layoutId = `app-${app.id}`
 
   useEffect(() => {
-    return () => onOpenChange(false)
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        if (sessionStorage.getItem(ssKeyExternal) === "true") {
+          setTimeout(() => onOpenChange(false), 200)
+          setTimeout(() => sessionStorage.removeItem(ssKeyAppId), 300)
+        }
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+
+    return () => {
+      onOpenChange(false)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
   }, [onOpenChange])
 
   return (
@@ -32,6 +50,8 @@ const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
           className="fixed inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-background"
           onLayoutAnimationComplete={() => {
             if (typeof window !== "undefined") {
+              sessionStorage.setItem(ssKeyExternal, "true")
+              sessionStorage.setItem(ssKeyAppId, app.id)
               openUrl(ensureHttpPrefix(app.url))
             }
           }}
@@ -43,7 +63,12 @@ const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
           </span>
         </motion.div>
       ) : (
-        <MotionWrapper layoutId={layoutId}>{children}</MotionWrapper>
+        <div className="flex flex-col items-center gap-1">
+          <MotionWrapper layoutId={layoutId}>{children}</MotionWrapper>
+          <span className="whitespace-nowrap text-[12px]">
+            {stringTruncate(app.name, 10)}
+          </span>
+        </div>
       )}
     </AnimatePresence>
   )
@@ -54,16 +79,20 @@ export default function AppItem({ app }: { app: App }) {
 
   return (
     <SplashWrapper app={app} open={open} onOpenChange={setOpen}>
-      <div className="flex flex-col items-center gap-1">
-        <Button variant="secondary" size="icon" onClick={() => setOpen(true)}>
-          <AppIcon icon={app.icon} iconSize={20} />
-        </Button>
-        <span className="whitespace-nowrap text-[12px]">
-          {stringTruncate(app.name, 10)}
-        </span>
-      </div>
+      <Button
+        variant="secondary"
+        size="icon"
+        onClick={() => setOpen(true)}
+        className={clsx({ "relative z-50": isCurrentApp(app.id) })}
+      >
+        <AppIcon icon={app.icon} iconSize={20} />
+      </Button>
     </SplashWrapper>
   )
+}
+
+function isCurrentApp(appId: string): boolean {
+  return sessionStorage.getItem(ssKeyAppId) === appId
 }
 
 function stringTruncate(str: string, maxCharLen: number) {
