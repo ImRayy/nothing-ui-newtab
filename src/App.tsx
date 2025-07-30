@@ -57,23 +57,21 @@ export default function App() {
       <div className="flex min-h-screen w-full select-none items-center justify-center p-4">
         <WidgetContainer />
         <Sidebar />
-        <Suspense>
-          {isDockEnabled && (
-            <Suspense>
-              <Dock />
-            </Suspense>
-          )}
-          {isAIToolsEnabled && (
-            <Suspense>
-              <AiTools />
-            </Suspense>
-          )}
-          {isAppDrawerEnabled && (
-            <Suspense>
-              <AppDrawer />
-            </Suspense>
-          )}
-        </Suspense>
+        {isDockEnabled && (
+          <Suspense>
+            <Dock />
+          </Suspense>
+        )}
+        {isAIToolsEnabled && (
+          <Suspense>
+            <AiTools />
+          </Suspense>
+        )}
+        {isAppDrawerEnabled && (
+          <Suspense>
+            <AppDrawer />
+          </Suspense>
+        )}
       </div>
     </>
   )
