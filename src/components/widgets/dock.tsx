@@ -17,8 +17,8 @@ const Dock = () => {
       )}
     >
       <div
-        className={clsx("flex items-center gap-3 rounded-xl p-2", [
-          isDockBg ? "bg-card" : "bg-inherit",
+        className={clsx("flex items-center gap-3 rounded-xl", [
+          isDockBg ? "bg-card p-2" : "bg-inherit",
         ])}
       >
         {dockApps.map((app) => (
