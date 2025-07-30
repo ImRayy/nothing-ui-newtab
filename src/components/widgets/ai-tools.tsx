@@ -25,10 +25,10 @@ const AiTools = () => {
         <motion.span initial={{ y: 20 }} animate={{ y: 0 }}>
           <Button
             className="z-10 h-11 rounded-full"
+            size="icon"
             onClick={() => setShowTools((prev) => !prev)}
           >
             <Icon icon="mingcute:ai-line" fontSize={20} />
-            AI Tools
           </Button>
         </motion.span>
         <AnimatePresence mode="wait">
