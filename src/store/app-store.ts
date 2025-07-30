@@ -1,6 +1,6 @@
 import * as idb from "idb-keyval"
-import { create } from "zustand"
 import { combine, createJSONStorage, persist } from "zustand/middleware"
+import { createWithEqualityFn } from "zustand/traditional"
 import {
   type App,
   aiTools as initialAITools,
@@ -8,7 +8,7 @@ import {
   drawerApps as initialDrawerApps,
 } from "../lib/variables"
 
-export const useAppStore = create(
+export const useAppStore = createWithEqualityFn(
   persist(
     combine(
       {

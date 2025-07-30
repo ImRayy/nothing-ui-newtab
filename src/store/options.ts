@@ -1,7 +1,7 @@
-import { create } from "zustand"
 import { combine, persist } from "zustand/middleware"
+import { createWithEqualityFn } from "zustand/traditional"
 
-export const useOptionsStore = create(
+export const useOptionsStore = createWithEqualityFn(
   persist(
     combine(
       {

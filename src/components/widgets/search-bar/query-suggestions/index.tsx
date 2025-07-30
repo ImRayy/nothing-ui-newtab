@@ -17,9 +17,7 @@ export default function QuerySuggestions(props: QuerySuggestionsProps) {
 
   const { list, removeQuery } = useQueryStore()
 
-  const getSelectedEngine = useSearchEngineStore(
-    (prev) => prev.getSelectedEngine,
-  )
+  const getSelectedEngine = useSearchEngineStore((s) => s.getSelectedEngine)
 
   const uf = new uFuzzy({ intraMode: 1 })
 

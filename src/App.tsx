@@ -16,8 +16,9 @@ const AiTools = lazy(() => import("./components/widgets/ai-tools"))
 const AppDrawer = lazy(() => import("./components/widgets/app-drawer"))
 
 export default function App() {
-  const { isDockEnabled, isAIToolsEnabled, isAppDrawerEnabled } =
-    useOptionsStore()
+  const isDockEnabled = useOptionsStore((s) => s.isDockEnabled)
+  const isAIToolsEnabled = useOptionsStore((s) => s.isAIToolsEnabled)
+  const isAppDrawerEnabled = useOptionsStore((s) => s.isAppDrawerEnabled)
   const isLightMode = useThemeStore((s) => s.isLightMode)
   const fetchImages = useImageStore((s) => s.fetchImages)
 

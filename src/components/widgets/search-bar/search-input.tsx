@@ -1,11 +1,12 @@
 import { Icon } from "@iconify/react"
 import { type FormEvent, lazy, Suspense, useEffect, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
+import { shallow } from "zustand/shallow"
 import Button from "~/components/ui/button"
 import { useOptionsStore } from "~/store/options"
 import { useQueryStore } from "~/store/query-history"
 import { useSearchEngineStore } from "~/store/search-engine"
-import { checkUrlPrefix, getDomain, trimSpaces } from "~/utils"
+import { checkUrlPrefix, getDomain, pick, trimSpaces } from "~/utils"
 import Input from "../../ui/input"
 
 const QuerySuggestions = lazy(() => import("./query-suggestions"))
@@ -24,7 +25,10 @@ function isImage(query: string): Promise<boolean> {
 
 const SearchInput = () => {
   const { searchEngines, selectedEngine, setSelectedEngine } =
-    useSearchEngineStore()
+    useSearchEngineStore(
+      (s) => pick(s, ["searchEngines", "selectedEngine", "setSelectedEngine"]),
+      shallow,
+    )
   const isQrySuggEnabled = useOptionsStore((s) => s.isQuerySuggestions)
 
   const [query, setQuery] = useState("")

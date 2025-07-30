@@ -2,8 +2,10 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import clsx from "clsx"
 import { AnimatePresence, motion, wrap } from "framer-motion"
 import { useCallback, useEffect, useState } from "react"
+import { shallow } from "zustand/shallow"
 import { useImageStore } from "~/store/image-store"
 import { useOptionsStore } from "~/store/options"
+import { pick } from "~/utils"
 import Menu from "../ui/menu"
 
 const ImgTag = (props: {
@@ -56,26 +58,43 @@ const PinnedIcon = () => {
 }
 
 const Gallery = () => {
-  const { loading, images } = useImageStore()
+  const { loading, images } = useImageStore(
+    (s) => pick(s, ["loading", "images"]),
+    shallow,
+  )
 
   const {
     isMonochromeWidgetImg,
     isBgImage,
-    pinnedWidgetImgIndex: pinnedImgIndex,
-    setPinnedWidgetImgIndex: setPinnedImgIndex,
-    currentImageIndex: selectedImage,
-    setCurrentImageIndex: setSelectedImage,
+    pinnedImgIndex,
+    setPinnedImgIndex,
+    selectedImage,
+    setSelectedImage,
     bgImageId,
     setBgImageId,
     gallaryImageInterval,
-  } = useOptionsStore()
+  } = useOptionsStore(
+    (s) => ({
+      isMonochromeWidgetImg: s.isMonochromeWidgetImg,
+      isBgImage: s.isBgImage,
+      pinnedImgIndex: s.pinnedWidgetImgIndex,
+      setPinnedImgIndex: s.setPinnedWidgetImgIndex,
+      selectedImage: s.currentImageIndex,
+      setSelectedImage: s.setCurrentImageIndex,
+      bgImageId: s.bgImageId,
+      setBgImageId: s.setBgImageId,
+      gallaryImageInterval: s.gallaryImageInterval,
+    }),
+    shallow,
+  )
+
   const imageIndex = wrap(0, images.length, selectedImage)
 
   const next = useCallback(() => {
     if (selectedImage >= images.length - 1) {
       setSelectedImage(0)
     } else setSelectedImage(selectedImage + 1)
-  }, [images, selectedImage, setSelectedImage])
+  }, [selectedImage, setSelectedImage, images.length])
 
   useEffect(() => {
     let intervalId: ReturnType<typeof setInterval>
@@ -88,7 +107,7 @@ const Gallery = () => {
     }
 
     return () => clearInterval(intervalId)
-  }, [gallaryImageInterval, pinnedImgIndex, images, next])
+  }, [gallaryImageInterval, pinnedImgIndex, next, images.length])
 
   return (
     <div className="h-48 w-96 rounded-xl bg-card p-3">

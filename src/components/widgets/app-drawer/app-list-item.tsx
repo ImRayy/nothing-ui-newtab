@@ -11,7 +11,7 @@ interface AppButtonProps {
 }
 
 const AppListItem = ({ app, isRemoveMode }: AppButtonProps) => {
-  const { removeDrawerApp } = useAppStore()
+  const removeDrawerApp = useAppStore((s) => s.removeDrawerApp)
 
   if (!app) return null
 

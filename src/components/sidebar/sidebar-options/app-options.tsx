@@ -1,4 +1,6 @@
-import { useOptionsStore } from "../../../store/options"
+import { shallow } from "zustand/shallow"
+import { useOptionsStore } from "~/store/options"
+import { pick } from "~/utils"
 import OptionsGroup from "./shared/options-group"
 import TabSwitchButton from "./shared/tab-switch-button"
 import ToggleOption from "./shared/toggle-option"
@@ -11,7 +13,18 @@ const AppOptions = () => {
     toggleDock,
     isDockBackground,
     toggleDockBg,
-  } = useOptionsStore()
+  } = useOptionsStore(
+    (s) =>
+      pick(s, [
+        "isAppDrawerEnabled",
+        "toggleEnableAppDrawer",
+        "isDockEnabled",
+        "toggleDock",
+        "isDockBackground",
+        "toggleDockBg",
+      ]),
+    shallow,
+  )
 
   return (
     <OptionsGroup title="Apps">

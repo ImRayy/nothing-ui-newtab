@@ -1,4 +1,6 @@
+import { shallow } from "zustand/shallow"
 import { useOptionsStore } from "~/store/options"
+import { pick } from "~/utils"
 import OptionsGroup from "../shared/options-group"
 import TabSwitchButton from "../shared/tab-switch-button"
 import ToggleOption from "../shared/toggle-option"
@@ -14,7 +16,20 @@ const GalleryOptions = () => {
     toggleMonochromeBg,
     isBgBlur,
     toggleBgBlur,
-  } = useOptionsStore()
+  } = useOptionsStore(
+    (s) =>
+      pick(s, [
+        "isBgImage",
+        "toggleBgImage",
+        "isMonochromeWidgetImg",
+        "toggleMonochromeWidgetImg",
+        "isMonochromeBg",
+        "toggleMonochromeBg",
+        "isBgBlur",
+        "toggleBgBlur",
+      ]),
+    shallow,
+  )
 
   return (
     <OptionsGroup title="Gallery">

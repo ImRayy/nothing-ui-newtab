@@ -5,7 +5,10 @@ import Input from "~/components/ui/input"
 import { useOptionsStore } from "~/store/options"
 
 const IntervalInput = () => {
-  const { gallaryImageInterval, setGallaryImageInterval } = useOptionsStore()
+  const gallaryImageInterval = useOptionsStore((s) => s.gallaryImageInterval)
+  const setGallaryImageInterval = useOptionsStore(
+    (s) => s.setGallaryImageInterval,
+  )
   const [value, setValue] = useState(gallaryImageInterval)
   const [dValue] = useDebounceValue(value, 1400)
 

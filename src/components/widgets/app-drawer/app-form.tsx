@@ -66,7 +66,8 @@ interface AppFormProps {
 
 const AppForm = ({ isOpen, setIsOpen, app }: AppFormProps) => {
   // Store functions
-  const { addDrawerApp, updateDrawerApp } = useAppStore()
+  const addDrawerApp = useAppStore((s) => s.addDrawerApp)
+  const updateDrawerApp = useAppStore((s) => s.updateDrawerApp)
 
   // Form vars
   const [name, setName] = useState(app?.name ?? "")

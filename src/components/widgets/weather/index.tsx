@@ -1,13 +1,24 @@
 import { motion } from "framer-motion"
 import { useEffect, useMemo, useState } from "react"
+import { shallow } from "zustand/shallow"
+import { icons } from "~/lib/icons"
+import { useOptionsStore } from "~/store/options"
 import { useThemeStore } from "~/store/theme"
-import { icons } from "../../../lib/icons"
-import { useOptionsStore } from "../../../store/options"
-import type { CurrentWeather } from "../../../types/weather"
+import type { CurrentWeather } from "~/types/weather"
+import { pick } from "~/utils"
 
 const Weather = () => {
   const { weatherAPI, weatherLocation, isScaleFahrenheit, showLocation } =
-    useOptionsStore()
+    useOptionsStore(
+      (s) =>
+        pick(s, [
+          "weatherAPI",
+          "weatherLocation",
+          "isScaleFahrenheit",
+          "showLocation",
+        ]),
+      shallow,
+    )
   const isLightMode = useThemeStore((s) => s.isLightMode)
   const [loading, setLoading] = useState(true)
 

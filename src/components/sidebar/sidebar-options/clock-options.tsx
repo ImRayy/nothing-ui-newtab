@@ -1,3 +1,5 @@
+import { shallow } from "zustand/shallow"
+import { pick } from "~/utils"
 import { useOptionsStore } from "../../../store/options"
 import OptionsGroup from "./shared/options-group"
 import ToggleOption from "./shared/toggle-option"
@@ -10,7 +12,18 @@ const ClockOptions = () => {
     toggleFormat24,
     greetings,
     toggelGreetings,
-  } = useOptionsStore()
+  } = useOptionsStore(
+    (s) =>
+      pick(s, [
+        "enableDigitalClock",
+        "toggleDidigtalClock",
+        "format24",
+        "toggleFormat24",
+        "greetings",
+        "toggelGreetings",
+      ]),
+    shallow,
+  )
   return (
     <OptionsGroup title="Clock">
       <ToggleOption

@@ -2,17 +2,28 @@ import { disableCache, enableCache, Icon } from "@iconify/react/dist/iconify.js"
 import { motion } from "framer-motion"
 import { nanoid } from "nanoid"
 import { useEffect, useState } from "react"
+import { shallow } from "zustand/shallow"
 import Button from "~/components/ui/button"
 import type { App } from "~/lib/variables"
 import { useAppStore } from "~/store/app-store"
-import { extractUniqueValues } from "~/utils"
+import { extractUniqueValues, pick } from "~/utils"
 import AppCard from "../shared/app-card"
 import NewTabHeader from "../shared/newtab-header"
 
 const DockOptions = () => {
   const [newApp, setNewApp] = useState<App | null>(null)
   const { addDockApp, dockApps, resetDockApp, updateDockApp, removeDockApp } =
-    useAppStore()
+    useAppStore(
+      (s) =>
+        pick(s, [
+          "addDockApp",
+          "dockApps",
+          "resetDockApp",
+          "updateDockApp",
+          "removeDockApp",
+        ]),
+      shallow,
+    )
 
   const addNewApp = () => {
     setNewApp({

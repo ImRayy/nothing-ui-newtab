@@ -1,11 +1,16 @@
 import clsx from "clsx"
 import { useMemo } from "react"
+import { shallow } from "zustand/shallow"
 import { useImageStore } from "~/store/image-store"
 import { useOptionsStore } from "~/store/options"
+import { pick } from "~/utils"
 
 const BackgroundImage = () => {
   const images = useImageStore((s) => s.images)
-  const { bgImageId, isMonochromeBg, isBgBlur, isBgImage } = useOptionsStore()
+  const { bgImageId, isMonochromeBg, isBgBlur, isBgImage } = useOptionsStore(
+    (s) => pick(s, ["bgImageId", "isMonochromeBg", "isBgBlur", "isBgImage"]),
+    shallow,
+  )
 
   const backgroundImage = useMemo(() => {
     return images.find(({ id }) => id === bgImageId)?.imageUrl

@@ -6,7 +6,7 @@ import SearchBar from "./search-bar"
 import Weather from "./weather"
 
 const WidgetContainer = () => {
-  const { enableDigitalClock } = useOptionsStore()
+  const enableDigitalClock = useOptionsStore((s) => s.enableDigitalClock)
 
   return (
     <div className="grid w-full max-w-2xl gap-4 lg:max-w-5xl lg:grid-cols-4">

@@ -1,5 +1,6 @@
 import { get as idbGet, set as idbSet } from "idb-keyval"
-import { create } from "zustand"
+import { createWithEqualityFn } from "zustand/traditional"
+
 import type { ImageFile } from "~/types"
 
 type ImageStore = {
@@ -12,7 +13,7 @@ type ImageStore = {
   removeImage: (id: string) => void
   saveImagesToDB: (images?: ImageFile[]) => void
 }
-export const useImageStore = create<ImageStore>((set, get) => ({
+export const useImageStore = createWithEqualityFn<ImageStore>((set, get) => ({
   shouldSave: false,
   loading: true,
   images: [],

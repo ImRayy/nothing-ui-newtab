@@ -1,5 +1,5 @@
-import { create } from "zustand"
 import { persist } from "zustand/middleware"
+import { createWithEqualityFn } from "zustand/traditional"
 import { searchProviders } from "~/lib/variables"
 
 export type SearchEngine = {
@@ -20,7 +20,7 @@ type SearchEngineStore = {
   reset: () => void
 }
 
-export const useSearchEngineStore = create(
+export const useSearchEngineStore = createWithEqualityFn(
   persist<SearchEngineStore>(
     (set, get) => ({
       searchEngines: searchProviders as SearchEngine[],

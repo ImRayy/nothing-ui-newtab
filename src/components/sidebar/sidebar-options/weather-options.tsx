@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { shallow } from "zustand/shallow"
+import { pick } from "~/utils"
 import { useOptionsStore } from "../../../store/options"
 import Button from "../../ui/button"
 import Input from "../../ui/input"
@@ -15,7 +17,20 @@ const WeatherOptions = () => {
     toggleFahrenheitScale,
     showLocation,
     toggleShowLocation,
-  } = useOptionsStore()
+  } = useOptionsStore(
+    (s) =>
+      pick(s, [
+        "weatherAPI",
+        "setWeatherAPI",
+        "weatherLocation",
+        "setWeatherLocation",
+        "isScaleFahrenheit",
+        "toggleFahrenheitScale",
+        "showLocation",
+        "toggleShowLocation",
+      ]),
+    shallow,
+  )
 
   const [api, setApi] = useState(weatherAPI)
   const [location, setLocation] = useState(weatherLocation)

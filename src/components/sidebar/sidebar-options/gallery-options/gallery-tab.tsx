@@ -4,12 +4,14 @@ import Compressor from "compressorjs"
 import { motion } from "framer-motion"
 import { del } from "idb-keyval"
 import { useEffect, useRef, useState } from "react"
+import { shallow } from "zustand/shallow"
 import Button from "~/components/ui/button"
 import Input from "~/components/ui/input"
 import Modal from "~/components/ui/modal"
 import { useImageStore } from "~/store/image-store"
 import { useOptionsStore } from "~/store/options"
 import type { ImageFile } from "~/types"
+import { pick } from "~/utils"
 import NewTabHeader from "../shared/newtab-header"
 
 type ImageSize = {
@@ -27,10 +29,30 @@ const GalleryTab = () => {
     shouldSave,
     saveImagesToDB,
     setImages,
-  } = useImageStore()
+  } = useImageStore(
+    (s) =>
+      pick(s, [
+        "images",
+        "addImages",
+        "removeImage",
+        "shouldSave",
+        "saveImagesToDB",
+        "setImages",
+      ]),
+    shallow,
+  )
 
   const { isBgImage, bgImageId, setBgImageId, setCurrentImageIndex } =
-    useOptionsStore()
+    useOptionsStore(
+      (s) =>
+        pick(s, [
+          "isBgImage",
+          "bgImageId",
+          "setBgImageId",
+          "setCurrentImageIndex",
+        ]),
+      shallow,
+    )
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 

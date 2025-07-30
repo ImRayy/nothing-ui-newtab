@@ -1,10 +1,15 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import clsx from "clsx"
+import { shallow } from "zustand/shallow"
 import { useSearchEngineStore } from "~/store/search-engine"
+import { pick } from "~/utils"
 
 const SearchEngines = () => {
   const { searchEngines, selectedEngine, setSelectedEngine } =
-    useSearchEngineStore()
+    useSearchEngineStore(
+      (s) => pick(s, ["searchEngines", "selectedEngine", "setSelectedEngine"]),
+      shallow,
+    )
 
   return (
     <div className="flex flex-wrap gap-3">

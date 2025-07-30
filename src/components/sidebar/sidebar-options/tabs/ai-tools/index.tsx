@@ -2,21 +2,23 @@ import { disableCache, enableCache, Icon } from "@iconify/react/dist/iconify.js"
 import { motion } from "framer-motion"
 import { nanoid } from "nanoid"
 import { useEffect, useState } from "react"
+import { shallow } from "zustand/shallow"
 import Button from "~/components/ui/button"
 import type { App } from "~/lib/variables"
 import { useAppStore } from "~/store/app-store"
-import { extractUniqueValues } from "~/utils"
+import { extractUniqueValues, pick } from "~/utils"
 import AppCard from "../../shared/app-card"
 import NewTabHeader from "../../shared/newtab-header"
 
 const AIToolsTab = () => {
-  const {
-    aiTools,
-    addAITool: add,
-    resetAITools: reset,
-    updateAITool,
-    removeAITool,
-  } = useAppStore()
+  const { aiTools, add, reset, updateAITool, removeAITool } = useAppStore(
+    (s) => ({
+      ...pick(s, ["aiTools", "updateAITool", "removeAITool"]),
+      add: s.addAITool,
+      reset: s.resetAITools,
+    }),
+    shallow,
+  )
   const [newAITool, setNewAITool] = useState<App | null>(null)
 
   const addNewAITool = () => {

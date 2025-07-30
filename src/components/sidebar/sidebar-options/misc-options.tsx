@@ -1,3 +1,5 @@
+import { shallow } from "zustand/shallow"
+import { pick } from "~/utils"
 import { useOptionsStore } from "../../../store/options"
 import OptionsGroup from "./shared/options-group"
 import TabSwitchButton from "./shared/tab-switch-button"
@@ -11,7 +13,18 @@ const MiscOptions = () => {
     toggleEnableAITools,
     isMonochromeIcon,
     toggleMonochromeIcon,
-  } = useOptionsStore()
+  } = useOptionsStore(
+    (s) =>
+      pick(s, [
+        "isQuerySuggestions",
+        "toggleQuerySuggestions",
+        "isAIToolsEnabled",
+        "toggleEnableAITools",
+        "isMonochromeIcon",
+        "toggleMonochromeIcon",
+      ]),
+    shallow,
+  )
 
   return (
     <OptionsGroup title="Misc">

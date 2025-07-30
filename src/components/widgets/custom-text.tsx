@@ -1,5 +1,7 @@
 import clsx from "clsx"
 import { useEffect, useRef, useState } from "react"
+import { shallow } from "zustand/shallow"
+import { pick } from "~/utils"
 import { useOptionsStore } from "../../store/options"
 import { getGreetings, parseDate } from "../../utils/datetime"
 
@@ -9,12 +11,23 @@ const getFirstWords = (str: string) => str.split("").splice(0, 3).join("")
 const textPlaceHolder = "Click here to edit"
 
 export const CustomText = () => {
-  const { customText, setCustomText } = useOptionsStore()
   const {
+    customText,
+    setCustomText,
     enableDigitalClock: isDigitalClockEnabled,
     greetings,
     isBgImage,
-  } = useOptionsStore()
+  } = useOptionsStore(
+    (s) =>
+      pick(s, [
+        "customText",
+        "setCustomText",
+        "enableDigitalClock",
+        "greetings",
+        "isBgImage",
+      ]),
+    shallow,
+  )
 
   const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<HTMLTextAreaElement>(null)

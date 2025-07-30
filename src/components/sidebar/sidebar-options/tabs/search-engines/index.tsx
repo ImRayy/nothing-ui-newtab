@@ -1,14 +1,19 @@
 import { disableCache, enableCache, Icon } from "@iconify/react/dist/iconify.js"
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
+import { shallow } from "zustand/shallow"
 import Button from "~/components/ui/button"
 import { type SearchEngine, useSearchEngineStore } from "~/store/search-engine"
-import { extractUniqueValues } from "~/utils"
+import { extractUniqueValues, pick } from "~/utils"
 import NewTabHeader from "../../shared/newtab-header"
 import SearchEngineCard from "./search-engine-card"
 
 const SearchEnginesTab = () => {
-  const { searchEngines, add, reset, update, remove } = useSearchEngineStore()
+  const { searchEngines, add, reset, update, remove } = useSearchEngineStore(
+    (s) => pick(s, ["searchEngines", "add", "reset", "update", "remove"]),
+    shallow,
+  )
+
   const [newEngine, setNewEngine] = useState<SearchEngine | null>(null)
 
   const addNewEngine = () => {

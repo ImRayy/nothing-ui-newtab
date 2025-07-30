@@ -11,7 +11,9 @@ interface AppMenuProps {
 }
 
 const AppMenu = ({ children, app }: AppMenuProps) => {
-  const { removeDrawerApp, dockApps, addToDock } = useAppStore()
+  const dockApps = useAppStore((s) => s.dockApps)
+  const addToDock = useAppStore((s) => s.addToDock)
+  const removeDrawerApp = useAppStore((s) => s.removeDrawerApp)
   const setSelectedApp = appListStore((s) => s.setSelectedApp)
 
   const isCurrentAppInDock = (): boolean => {
