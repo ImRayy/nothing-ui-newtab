@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { Slot } from "@radix-ui/react-slot"
+import type { VariantProps } from "class-variance-authority"
 import clsx from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 import type React from "react"
@@ -7,21 +8,35 @@ import { useEffect, useState } from "react"
 import type { App } from "~/lib/variables"
 import { ensureHttpPrefix, openUrl } from "~/utils"
 import AppIcon from "./ui/app-icon"
-import Button from "./ui/button"
+import Button, { type buttonVariants } from "./ui/button"
 
-interface WrapperProps {
-  children: React.ReactNode
+interface AppItemProps {
   app: App
+  showLabel?: boolean
+  onOpenChange?: (state: boolean) => void
+  layoutIdPrefix?: string
+}
+
+interface WrapperProps extends AppItemProps {
+  children: React.ReactNode
   open: boolean
   onOpenChange: (state: boolean) => void
+  showLabel: boolean
 }
 
 const ssKeyExternal = "session:opened:external-link"
 const ssKeyAppId = "session:selected:app-id"
 
-const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
+export const SplashWrapper = ({
+  children,
+  app,
+  open,
+  onOpenChange,
+  showLabel,
+  layoutIdPrefix,
+}: WrapperProps) => {
   const MotionWrapper = motion.create(Slot)
-  const layoutId = `app-${app.id}`
+  const layoutId = `${layoutIdPrefix || "app"}-${app.id}`
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -36,7 +51,6 @@ const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
     document.addEventListener("visibilitychange", handleVisibilityChange)
 
     return () => {
-      onOpenChange(false)
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
   }, [onOpenChange])
@@ -47,7 +61,7 @@ const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
         <motion.div
           key="expanded"
           layoutId={layoutId}
-          className="fixed inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-background"
+          className="fixed inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-background"
           onLayoutAnimationComplete={() => {
             if (typeof window !== "undefined") {
               sessionStorage.setItem(ssKeyExternal, "true")
@@ -63,9 +77,13 @@ const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
           </span>
         </motion.div>
       ) : (
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex size-full flex-col items-center gap-1">
           <MotionWrapper layoutId={layoutId}>{children}</MotionWrapper>
-          <span className="whitespace-nowrap text-[12px]">
+          <span
+            className={clsx("whitespace-nowrap text-[12px]", {
+              hidden: !showLabel,
+            })}
+          >
             {stringTruncate(app.name, 10)}
           </span>
         </div>
@@ -74,18 +92,34 @@ const SplashWrapper = ({ children, app, open, onOpenChange }: WrapperProps) => {
   )
 }
 
-export default function AppItem({ app }: { app: App }) {
+export default function AppItem({
+  app,
+  showLabel = true,
+  onOpenChange,
+  layoutIdPrefix,
+  variant,
+}: AppItemProps & {
+  variant?: VariantProps<typeof buttonVariants>["variant"]
+}) {
   const [open, setOpen] = useState(false)
 
+  useEffect(() => onOpenChange?.(open), [open, onOpenChange])
+
   return (
-    <SplashWrapper app={app} open={open} onOpenChange={setOpen}>
+    <SplashWrapper
+      app={app}
+      open={open}
+      onOpenChange={setOpen}
+      showLabel={showLabel}
+      layoutIdPrefix={layoutIdPrefix}
+    >
       <Button
-        variant="secondary"
+        variant={variant ?? "secondary"}
         size="icon"
         onClick={() => setOpen(true)}
         className={clsx({ "relative z-50": isCurrentApp(app.id) })}
       >
-        <AppIcon icon={app.icon} iconSize={20} />
+        <AppIcon icon={app.icon} iconSize={20} className="size-full" />
       </Button>
     </SplashWrapper>
   )

@@ -58,9 +58,21 @@ export default function App() {
         <WidgetContainer />
         <Sidebar />
         <Suspense>
-          {isDockEnabled && <Dock />}
-          {isAIToolsEnabled && <AiTools />}
-          {isAppDrawerEnabled && <AppDrawer />}
+          {isDockEnabled && (
+            <Suspense>
+              <Dock />
+            </Suspense>
+          )}
+          {isAIToolsEnabled && (
+            <Suspense>
+              <AiTools />
+            </Suspense>
+          )}
+          {isAppDrawerEnabled && (
+            <Suspense>
+              <AppDrawer />
+            </Suspense>
+          )}
         </Suspense>
       </div>
     </>
