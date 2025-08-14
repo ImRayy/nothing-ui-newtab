@@ -12,21 +12,22 @@ interface AppIconProps {
 const AppIcon = forwardRef<HTMLSpanElement, AppIconProps>(
   ({ icon, iconSize, className, ...props }, ref) => {
     const isMonochromeEnabled = useOptionsStore((s) => s.isMonochromeIcon)
+    const isWebIcon = icon.startsWith("webicon:")
     return (
       <span
         ref={ref}
-        style={{ width: iconSize }}
+        style={{ width: !isWebIcon ? iconSize : (iconSize || 0) * 1.38 }}
         className={className}
         {...props}
       >
-        {icon && !icon.startsWith("webicon:") ? (
+        {icon && !isWebIcon ? (
           <Icon icon={icon} className="size-full" />
         ) : (
           <img
             src={googleFavIcon(icon.split(":")[1])}
             alt="icon-image"
             style={isMonochromeEnabled ? { filter: "grayscale(100%)" } : {}}
-            className="size-full"
+            className="size-full rounded-full"
           />
         )}
       </span>

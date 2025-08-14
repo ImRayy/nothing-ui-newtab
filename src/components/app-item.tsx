@@ -119,7 +119,7 @@ export default function AppItem({
         onClick={() => setOpen(true)}
         className={clsx({ "relative z-50": isCurrentApp(app.id) })}
       >
-        <AppIcon icon={app.icon} iconSize={20} className="size-full" />
+        <AppIcon icon={app.icon} iconSize={20} />
       </Button>
     </SplashWrapper>
   )
