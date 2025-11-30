@@ -14,6 +14,7 @@ export default {
         background: "hsl(var(--background))",
         backgroundAlt: "hsl(var(--background-alt))",
         foreground: "hsl(var(--foreground))",
+        border: "hsl(var(--border))",
         muted: "hsl(var(--muted))",
         card: {
           DEFAULT: "hsl(var(--card))",

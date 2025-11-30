@@ -10,6 +10,7 @@
     --background: 240 10% 4%;
     --background-alt: 0 0% 19%;
     --foreground: 240 5% 96%;
+    --border: 0 0% 16%;
     --card: 0 0% 11%;
     --card-hover: 0 0% 16%;
     --card-foreground: 0 0% 95%;
@@ -23,6 +24,7 @@
     --background: 0 0% 100%;
     --background-alt: 0 0% 88%;
     --foreground: 240 10% 4%;
+    --border: 0 0% 90%;
     --card: 0 0% 95%;
     --card-hover: 0 0% 86%;
     --card-foreground: 0 0% 11%;
