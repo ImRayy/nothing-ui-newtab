@@ -1,12 +1,9 @@
-import * as idbKeyval from "idb-keyval"
-import { nanoid } from "nanoid"
 import { lazy, Suspense, useEffect } from "react"
 import { Toaster } from "sonner"
 import BackgroundImage from "./components/background-image"
 import PWAUpdatePrompt from "./components/pwa/update-prompt"
 import Sidebar from "./components/sidebar"
 import WidgetContainer from "./components/widgets/widget-container"
-import type { App as AppType } from "./lib/variables"
 import { useImageStore } from "./store/image-store"
 import { useOptionsStore } from "./store/options"
 import { useThemeStore } from "./store/theme"
@@ -33,7 +30,6 @@ export default function App() {
   }, [isLightMode])
 
   useEffect(() => {
-    migrateAppListToAddIds()
     fetchImages()
   }, [fetchImages])
 
@@ -76,57 +72,4 @@ export default function App() {
       </div>
     </>
   )
-}
-
-// WARN: Temporary migration function for adding IDs to existing app list
-// Such as app drawer, ai tools & dock apps
-// Reason: Database migration to include unique identifiers
-// Remove this function after some period of time
-async function migrateAppListToAddIds() {
-  const storeName = "app-store"
-
-  const allIdExists = (list: AppType[]) => {
-    return list.findIndex(({ id }) => id) === 0
-  }
-
-  const addIds = (list: AppType[]) => {
-    return list.map((app) => {
-      if (!app.id) {
-        return { ...app, id: nanoid() }
-      }
-      return app
-    })
-  }
-
-  let apps = await idbKeyval.get(storeName)
-
-  if (!apps && typeof apps === "undefined") {
-    return
-  }
-
-  apps = JSON.parse(apps)
-
-  const dockApps: AppType[] = apps.state.dockApps
-  const drawerApps = apps.state.drawerApps
-  const aiTools = apps.state.aiTools
-
-  if (
-    allIdExists(dockApps) &&
-    allIdExists(drawerApps) &&
-    allIdExists(aiTools)
-  ) {
-    return
-  }
-
-  const updatedList = {
-    ...apps,
-    state: {
-      ...apps.state,
-      aiTools: addIds(aiTools),
-      drawerApps: addIds(drawerApps),
-      dockApps: addIds(dockApps),
-    },
-  }
-
-  await idbKeyval.set(storeName, JSON.stringify(updatedList))
 }
