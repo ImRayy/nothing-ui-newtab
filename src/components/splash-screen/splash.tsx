@@ -97,7 +97,7 @@ export default function SplashScreenComponent({ name, icon }: App) {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="relative size-32 shrink-0 rounded-full border-4 border-white/20 bg-gradient-to-br from-slate-900 to-slate-950 p-7 backdrop-blur-sm"
+            className="relative size-32 shrink-0 rounded-full border-4 border-border bg-card p-7 backdrop-blur-sm"
           >
             <AppIcon icon={icon} />
           </MotionSlot>
