@@ -28,12 +28,14 @@ export default function SplashScreenProvider({
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         if (sessionStorage.getItem(ssKeyExternal) === "true") {
+          setTimeout(() => setCurrentApp(undefined), 200)
           setTimeout(() => sessionStorage.removeItem(ssKeyAppId), 300)
         }
       }
     }
 
     document.addEventListener("visibilitychange", handleVisibilityChange)
+
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
