@@ -3,6 +3,8 @@ import { Toaster } from "sonner"
 import BackgroundImage from "./components/background-image"
 import PWAUpdatePrompt from "./components/pwa/update-prompt"
 import Sidebar from "./components/sidebar"
+import SplashInset from "./components/splash-screen/inset"
+import SplashScreenProvider from "./components/splash-screen/provider"
 import WidgetContainer from "./components/widgets/widget-container"
 import { useImageStore } from "./store/image-store"
 import { useOptionsStore } from "./store/options"
@@ -51,25 +53,29 @@ export default function App() {
       />
       <BackgroundImage />
       <PWAUpdatePrompt />
-      <div className="flex min-h-screen w-full select-none items-center justify-center p-4">
-        <WidgetContainer />
-        <Sidebar />
-        {isDockEnabled && (
-          <Suspense>
-            <Dock />
-          </Suspense>
-        )}
-        {isAIToolsEnabled && (
-          <Suspense>
-            <AiTools />
-          </Suspense>
-        )}
-        {isAppDrawerEnabled && (
-          <Suspense>
-            <AppDrawer />
-          </Suspense>
-        )}
-      </div>
+      <SplashScreenProvider>
+        <div className="flex min-h-screen w-full select-none items-center justify-center p-4">
+          <SplashInset>
+            <WidgetContainer />
+          </SplashInset>
+          <Sidebar />
+          {isDockEnabled && (
+            <Suspense>
+              <Dock />
+            </Suspense>
+          )}
+          {isAIToolsEnabled && (
+            <Suspense>
+              <AiTools />
+            </Suspense>
+          )}
+          {isAppDrawerEnabled && (
+            <Suspense>
+              <AppDrawer />
+            </Suspense>
+          )}
+        </div>
+      </SplashScreenProvider>
     </>
   )
 }

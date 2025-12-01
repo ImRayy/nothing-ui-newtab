@@ -4,9 +4,10 @@ import AppListItem from "./app-list-item"
 
 interface AppListProps {
   isRemoveMode: boolean
+  onSelect: () => void
 }
 
-const AppList = ({ isRemoveMode }: AppListProps) => {
+const AppList = ({ isRemoveMode, onSelect }: AppListProps) => {
   const drawerApps = useAppStore((s) => s.drawerApps)
 
   return (
@@ -28,6 +29,7 @@ const AppList = ({ isRemoveMode }: AppListProps) => {
             app={app}
             isRemoveMode={isRemoveMode}
             key={`drawer-app-${app.id || app.name}`}
+            onSelect={onSelect}
           />
         ))}
       </motion.div>

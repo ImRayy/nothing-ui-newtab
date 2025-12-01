@@ -22,7 +22,12 @@ const AppDrawer = () => {
         </Button>
       </div>
       <AnimatePresence mode="wait">
-        {isOpen && <AppList isRemoveMode={removeMode} />}
+        {isOpen && (
+          <AppList
+            isRemoveMode={removeMode}
+            onSelect={() => setIsOpen(false)}
+          />
+        )}
       </AnimatePresence>
     </div>
   )

@@ -9,12 +9,12 @@ interface AppIconProps {
   className?: string
 }
 
-const AppIcon = forwardRef<HTMLSpanElement, AppIconProps>(
+const AppIcon = forwardRef<HTMLDivElement, AppIconProps>(
   ({ icon, iconSize, className, ...props }, ref) => {
     const isMonochromeEnabled = useOptionsStore((s) => s.isMonochromeIcon)
     const isWebIcon = icon.startsWith("webicon:")
     return (
-      <span
+      <div
         ref={ref}
         style={{ width: !isWebIcon ? iconSize : (iconSize || 0) * 1.38 }}
         className={className}
@@ -30,7 +30,7 @@ const AppIcon = forwardRef<HTMLSpanElement, AppIconProps>(
             className="size-full rounded-full"
           />
         )}
-      </span>
+      </div>
     )
   },
 )
