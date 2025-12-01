@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { AnimatePresence, motion } from "framer-motion"
-import { lazy, Suspense, useState } from "react"
+import { lazy, Suspense } from "react"
 import Button from "../ui/button"
+import { useSidebarOptions } from "./sidebar-store"
 
 const SidebarContent = lazy(() => import("./sidebar-content"))
 
@@ -19,7 +20,10 @@ const Backdrop = ({ onOpenChange }: { onOpenChange: () => void }) => {
 }
 
 const Sidebar = () => {
-  const [open, setOpen] = useState(false)
+  const open = useSidebarOptions((state) => state.isOpen)
+
+  const onClose = () => useSidebarOptions.setState({ isOpen: !open })
+
   return (
     <>
       <AnimatePresence mode="wait">
@@ -34,7 +38,7 @@ const Sidebar = () => {
               animate={{ y: 0 }}
               exit={{ y: 20, opacity: 0 }}
               type="button"
-              onClick={() => setOpen(true)}
+              onClick={onClose}
             >
               <Icon
                 icon="tabler:settings"
@@ -49,7 +53,7 @@ const Sidebar = () => {
         {open && (
           <Suspense>
             <SidebarContent />
-            <Backdrop onOpenChange={() => setOpen(false)} />
+            <Backdrop onOpenChange={onClose} />
           </Suspense>
         )}
       </AnimatePresence>
