@@ -1,5 +1,6 @@
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useCallback, useRef, useState } from "react"
+import { useEventListener } from "usehooks-ts"
 import type { App } from "~/lib/variables"
 import { ensureHttpPrefix, openUrl } from "~/utils"
 import { SplashScreenContext } from "./context"
@@ -15,31 +16,28 @@ export default function SplashScreenProvider({
   children,
 }: SplashScreenProviderProps) {
   const [currentApp, setCurrentApp] = useState<App | undefined>(undefined)
+  const documentRef = useRef<Document>(document)
 
-  const openUrlHandler = () => {
+  const openUrlHandler = useCallback(() => {
     if (typeof window !== "undefined" && currentApp) {
       sessionStorage.setItem(ssKeyExternal, "true")
       sessionStorage.setItem(ssKeyAppId, currentApp?.id)
       openUrl(ensureHttpPrefix(currentApp?.url))
     }
-  }
+  }, [currentApp])
 
-  useEffect(() => {
-    const handleVisibilityChange = () => {
+  useEventListener(
+    "visibilitychange",
+    () => {
       if (!document.hidden) {
         if (sessionStorage.getItem(ssKeyExternal) === "true") {
           setTimeout(() => setCurrentApp(undefined), 200)
           setTimeout(() => sessionStorage.removeItem(ssKeyAppId), 300)
         }
       }
-    }
-
-    document.addEventListener("visibilitychange", handleVisibilityChange)
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange)
-    }
-  }, [])
+    },
+    documentRef,
+  )
 
   return (
     <SplashScreenContext.Provider
