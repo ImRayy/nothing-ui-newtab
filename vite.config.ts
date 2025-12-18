@@ -4,7 +4,7 @@ import { defineConfig } from "vite"
 import { VitePWA, type VitePWAOptions } from "vite-plugin-pwa"
 
 const manifest: ManifestV3Export = {
-  homepage_url: "/",
+  homepage_url: "https://github.com/ImRayy/nothing-ui-newtab",
   manifest_version: 3,
   name: "Nothing UI Newtab",
   short_name: "Nothing UI Newtab",
