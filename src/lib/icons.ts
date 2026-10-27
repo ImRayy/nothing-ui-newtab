@@ -1,24 +1,18 @@
-// Cloudnary common links
-const c = {
-  one: "https://res.cloudinary.com/stylesh/image/upload",
-  two: "nothing-new-tab/weather-icons",
-}
-
 const local = {
-  clear_day: `${c.one}/v1733338463/${c.two}/mfjgk2jpos0lmngvx0cb.png`,
-  clear_night: `${c.one}/v1733338462/${c.two}/qboki1bo9nhzfjzzhtqy.png`,
-  cloudy_day: `${c.one}/v1733338461/${c.two}/daxtzh5zoynjei3bntao.png`,
-  cloudy_night: `${c.one}/v1733338462/${c.two}/wbbkkoglowaxtubgatus.png`,
-  fog_day: `${c.one}/v1733338462/${c.two}/nfideig9bnglm0bdfmtg.png`,
-  hail_day: `${c.one}/v1733338461/${c.two}/po8syfoo7lkiekm74l1v.png`,
-  haze_day: `${c.one}/v1733338461/${c.two}/uvifojpn7fn2iga8vo7c.png`,
-  haze_night: `${c.one}/v1733338461/${c.two}/voqzrdbbtssuvhe9ifwc.png`,
-  partly_cloudy_day: `${c.one}/v1733338461/${c.two}/uvifojpn7fn2iga8vo7c.png`,
-  rain_day: `${c.one}/v1733338462/${c.two}/c70vhp9pf2me34rbpuuc.png`,
-  sleet_day: `${c.one}/v1733338461/${c.two}/joyw8g8gsfmrrzpdovyy.png`,
-  snow_day: `${c.one}/v1733338461/${c.two}/kfngmqs2sbbzxoffqetg.png`,
-  thunder_day: `${c.one}/v1733338461/${c.two}/hnyp8fdf1ztfyx4sfpwn.png`,
-  wind_day: `${c.one}/v1733338461/${c.two}/fjwlvpzbgusve4jz6kbn.png`,
+  clear_day: "weather-icons/clear_day.webp",
+  clear_night: "weather-icons/clear_night.webp",
+  cloudy_day: "weather-icons/cloud_day.webp",
+  cloudy_night: "weather-icons/cloud_night.webp",
+  fog_day: "weather-icons/fog_day.webp",
+  hail_day: "weather-icons/hail_day.webp",
+  haze_day: "weather-icons/haze.webp",
+  haze_night: "weather-icons/haze.webp",
+  partly_cloudy_day: "weather-icons/fog_day.webp",
+  rain_day: "weather-icons/rain.webp",
+  sleet_day: "weather-icons/haze.webp",
+  snow_day: "weather-icons/snow_day.webp",
+  thunder_day: "weather-icons/thunder.webp",
+  wind_day: "weather-icons/wind_day.webp",
 }
 
 export const icons = {
